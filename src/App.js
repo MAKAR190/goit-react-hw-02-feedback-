@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Section from "./components/Section/Section"
+import Statistics from './components/Statistics/Statistics'
+import FeedbackOptions from './components/FeedbackOptions/FeedbackOptions'
+class App extends React.Component {
+  
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0
+  }
+ 
+  countTotalFeedback(){
+    return this.state.good + this.state.bad + this.state.neutral;
+  }
+  countPositiveFeedbackPercentage(){
+    if(this.countTotalFeedback() === 0){
+      return 0;
+    }else{
+      return Math.round(this.state.good/this.countTotalFeedback() * 100);
+    }
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  onLeaveFeedback(){
+ this.setState((prevState)=>
+{ return {
+     good: prevState.good += 1,
+}});
+  }
+  render(){
+    return (
+      <Section title="Please leave feedback">
+        <FeedbackOptions step={1} onLeaveFeedback={this.onLeaveFeedback}/>
+            <Statistics good={this.state.good} bad={this.state.bad} neutral={this.state.neutral} total={this.countTotalFeedback()} positivePercentage={this.countPositiveFeedbackPercentage()}/>
+      </Section>
+    );
+  }
+
 }
 
 export default App;
