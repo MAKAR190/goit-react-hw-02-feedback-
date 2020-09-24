@@ -11,10 +11,10 @@ class App extends React.Component {
     bad: 0,
   };
 
-  countTotalFeedback() {
+  countTotalFeedback = () => {
     return this.state.good + this.state.bad + this.state.neutral;
-  }
-  countPositiveFeedbackPercentage() {
+  };
+  countPositiveFeedbackPercentage=()=> {
     if (this.countTotalFeedback() === 0) {
       return 0;
     } else {
@@ -22,7 +22,7 @@ class App extends React.Component {
     }
   }
 
-  onLeaveFeedback({ target }) {
+  onLeaveFeedback = ({ target }) => {
     if (target.dataset.action === "good") {
       this.setState((prevState, prevProps) => {
         return {
@@ -42,7 +42,7 @@ class App extends React.Component {
         };
       });
     }
-  }
+  };
   render() {
     return (
       <Section title="Please leave feedback">
